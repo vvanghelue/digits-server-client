@@ -5,28 +5,28 @@ var digitsClient = require('./index');
 //var digitsClient = require('digits-server-client');
 
 var digits = new digitsClient({
-	digitsConsumerKey: 'myConsumerKey',
-	digitsHost: "https://mydomain.com"
+  digitsConsumerKey: 'myConsumerKey',
+  digitsHost: "https://mydomain.com"
 });
 
 digits.sendVerificationCode({
-	phoneNumber: '0648446907',
-	countryCode: 'FR'
+  phoneNumber: '0648446907',
+  countryCode: 'FR'
 }).then(function (registrationToken) {
-	//eyJsb2dpblZlcmlmaWNhdGlvblJlcXVlc3RJZCI6InV...
-	console.log(registrationToken);
+  //eyJsb2dpblZlcmlmaWNhdGlvblJlcXVlc3RJZCI6InV...
+  console.log(registrationToken);
 }).then(null, function (error) {
-	//error
+  //error
 });
 
 
 digits.verifyCode({
-	registrationToken: 'eyJsb2dpblZlcmlmaWNhdGlvblJlcXVlc3RJZCI6InV...',
-	code: '196099',
+  registrationToken: 'eyJsb2dpblZlcmlmaWNhdGlvblJlcXVlc3RJZCI6InV...',
+  code: '196099',
 }).then(function (results) {
-	//{ success: true, phone: '+33648446907'}
-	//{ success: false, phone: '+33648446907', errors: []}
-	console.log(results);
+  //{ success: true, phone: '+33648446907'}
+  //{ success: false, phone: '+33648446907', errors: []}
+  console.log(results);
 }).then(null, function (error) {
-	//error
+  //error
 });
