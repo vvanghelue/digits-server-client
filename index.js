@@ -196,7 +196,7 @@ module.exports = function (options) {
           }
 
           if (jsonBody.errors) {
-            resolve({success: false, phone: token.phoneNumber, errors: errors});
+            resolve({success: false, phone: token.phoneNumber, errors: jsonBody.errors});
           }
 
           resolve({success: !!jsonBody['X-Verify-Credentials-Authorization'], phone: token.phoneNumber});
