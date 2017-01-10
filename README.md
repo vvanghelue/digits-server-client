@@ -13,7 +13,7 @@ var digitsClient = require('digits-server-client');
 
 var digits = new digitsClient({
 	digitsConsumerKey: 'myConsumerKey',
-	digitsHost: "https://mydomain.com"
+	digitsHost: "https://mydomain.com" //MUST BE HTTPS
 });
 ```
 
