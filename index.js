@@ -205,6 +205,90 @@ module.exports = function (options) {
     })
   };
 
+  /**
+    VoiceCall
+      Usage example :
+
+    voiceCall({
+      phoneNumber: '0648446907',
+      countryCode: 'FR',
+      headers: {"user-agent": ...., "accept-language": .....}
+    }).then(function (data) {
+      console.log(data);
+    }).then(null, function (error) {
+      //error
+    });
+   */
+  var voiceCall = function (options) {
+    options = options || {};
+    return getWebSession().then(function (session) {
+      return new Promise(function (resolve, reject) {
+        request.post({
+          har: {    
+            "method": "POST",
+            "url": "https://www.digits.com/sdk/login",
+            "headers": [
+              {
+                "name": "cookie",
+                "value": session.cookie
+              },
+              {
+                "name": "accept-language",
+                "value": options.headers["accept-language"]
+              },
+              {
+                "name": "user-agent",
+                "value": options.headers["user-agent"]
+              },
+              {
+                "name": "referer",
+                "value": "https://www.digits.com/embed?consumer_key=" + digits_consumer_key + "&host=" + digits_host
+              }
+            ],
+            "postData": {
+              "mimeType": "application/x-www-form-urlencoded",
+              "params": [
+                {
+                  "name": "authenticity_token",
+                  "value": session.authenticityToken
+                },
+                {
+                  "name": "verification_type",
+                  "value": "voicecall"
+                },
+                {
+                  "name": "x_auth_country_code",
+                  "value": options.countryCode
+                },
+                {
+                  "name": "x_auth_phone_number",
+                  "value": options.phoneNumber
+                }
+              ]
+            }
+          }
+        }, function (error, response, body) {
+          if (error) {
+            return reject('HTTP ERROR : Unable to parse Digits login response.');
+          }
+
+          try {
+            var jsonBody = JSON.parse(body);
+          } catch (error) {
+            return reject('Unable to parse Digits response.');
+          }
+
+          if (jsonBody.errors) {
+            return reject(jsonBody.errors);
+          }
+
+          resolve(jsonBody);
+        })
+      })
+    })
+  };
+
   this.sendVerificationCode = sendVerificationCode;
   this.verifyCode = verify;
+  this.voiceCall = voiceCall;
 }
