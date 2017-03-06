@@ -37,14 +37,16 @@ module.exports = function (options) {
   };
 
   /**
-    Send verification code to device
+    Send verification code to device via sms or voicecall
     Get registration token to challenge the code later
 
       Usage example :
 
     sendVerificationCode({
       phoneNumber: '0648446907',
-      countryCode: 'FR'
+      countryCode: 'FR',
+      headers: {"user-agent": ...., "accept-language": .....},
+      method: "sms" // sms or "voicecall"
     }).then(function (registrationToken) {
       console.log(registrationToken);
     }).then(null, function (error) {
@@ -53,6 +55,7 @@ module.exports = function (options) {
    */
   var sendVerificationCode = function (options) {
     options = options || {};
+
     return getWebSession().then(function (session) {
       return new Promise(function (resolve, reject) {
         request.post({
@@ -67,7 +70,15 @@ module.exports = function (options) {
               {
                 "name": "referer",
                 "value": "https://www.digits.com/embed?consumer_key=" + digits_consumer_key + "&host=" + digits_host
-              }
+              },
+              {
+                "name": "accept-language",
+                "value": options.headers["accept-language"]
+              },
+              {
+                "name": "user-agent",
+                "value": options.headers["user-agent"]
+              },
             ],
             "postData": {
               "mimeType": "application/x-www-form-urlencoded",
@@ -78,7 +89,7 @@ module.exports = function (options) {
                 },
                 {
                   "name": "verification_type",
-                  "value": "sms"
+                  "value": options.method ? options.method : "sms"
                 },
                 {
                   "name": "x_auth_country_code",
@@ -117,7 +128,6 @@ module.exports = function (options) {
       })
     })
   };
-
 
   /**
     Test code validation

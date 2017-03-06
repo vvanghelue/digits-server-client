@@ -11,7 +11,9 @@ var digits = new digitsClient({
 
 digits.sendVerificationCode({
   phoneNumber: '0648446907',
-  countryCode: 'FR'
+  countryCode: 'FR',
+  headers: req.headers, // for express.js
+  // method: "voicecall"
 }).then(function (registrationToken) {
   //eyJsb2dpblZlcmlmaWNhdGlvblJlcXVlc3RJZCI6InV...
   console.log(registrationToken);

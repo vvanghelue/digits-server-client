@@ -22,7 +22,9 @@ var digits = new digitsClient({
 ```js
 digits.sendVerificationCode({
 	phoneNumber: '0648446907',
-	countryCode: 'FR'
+	countryCode: 'FR',
+	headers: req.headers // for express.js,
+	// method: "voicecall" (sms by default)
 }).then(function (registrationToken) {
 	//eyJsb2dpblZlcmlmaWNhdGlvblJlcXVlc3RJZCI6InV...
 	console.log(registrationToken);
