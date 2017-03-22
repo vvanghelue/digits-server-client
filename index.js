@@ -59,7 +59,7 @@ module.exports = function (options) {
     return getWebSession().then(function (session) {
       return new Promise(function (resolve, reject) {
         request.post({
-          har: {    
+          har: {
             "method": "POST",
             "url": "https://www.digits.com/sdk/login",
             "headers": [
@@ -150,7 +150,7 @@ module.exports = function (options) {
     return getWebSession().then(function (session) {
       return new Promise(function (resolve, reject) {
         request.post({
-          har: {    
+          har: {
             "method": "POST",
             "url": "https://www.digits.com/sdk/challenge",
             "headers": [
