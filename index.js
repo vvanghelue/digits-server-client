@@ -56,11 +56,9 @@ module.exports = function (options) {
   var sendVerificationCode = function (options) {
     options = options || {};
 
-    if(!options.headers){
-      return Promise.reject(new Error("Missing options.headers field"));
-    } else if(!options.phoneNumber){
+    if (!options.phoneNumber) {
       return Promise.reject(new Error("Missing options.phoneNumber field"));
-    } else if(!options.countryCode){
+    } else if (!options.countryCode) {
       return Promise.reject(new Error("Missing options.countryCode field"));
     }
 
