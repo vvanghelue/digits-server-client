@@ -73,11 +73,11 @@ module.exports = function (options) {
               },
               {
                 "name": "accept-language",
-                "value": options.headers["accept-language"]
+                "value": options.headers && options.headers["accept-language"] ? options.headers["accept-language"] : 'en-US'
               },
               {
                 "name": "user-agent",
-                "value": options.headers["user-agent"]
+                "value": options.headers && options.headers["user-agent"] ? options.headers["user-agent"] : 'Mozilla/5.0'
               },
             ],
             "postData": {
